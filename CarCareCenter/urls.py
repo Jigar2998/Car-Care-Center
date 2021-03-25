@@ -147,7 +147,13 @@ urlpatterns = [
     path('category_home',views.category_home,name='category_home'),
     path('show_category',views.show_category,name='show_category'),
     path('add_category',views.add_category,name='add_category'),
+    path('del_category/<int:id>',views.del_category,name='del_category'),
+    path('update_category/<int:id>',views.update_category,name='update_category'),
+
     path('add_sub_category',views.add_sub_category,name='add_sub_category'),
+    path('update_sub_category/<int:id>',views.update_sub_category,name='update_sub_category'),
+    path('delete_subcategory/<int:id>',views.delete_subcategory,name='delete_subcategory'),
+
     path('show_sub_category',views.show_sub_category,name='show_sub_category'),
     path('subcategory/<int:id>',views.sub_category_view,name='subcategory'),
     path('add_cart/<int:id>',views.add_cart,name='add_cart'),

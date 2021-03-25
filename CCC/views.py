@@ -1524,6 +1524,31 @@ def show_category(request):
     else:
         return redirect('adminlogin')
 
+def update_category(request,id):
+    if 'admin' in request.session:
+        if request.method == 'POST':
+            name = request.POST.get('name')
+            myfile = request.FILES['image']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
+            parts_category.objects.filter(id=id).update(name = name,image=myfile)
+            return redirect('show_category')
+        else:
+            admin = superuser.objects.get(fname = request.session['admin'])
+            cat = parts_category.objects.get(id=id)
+            return render(request, 'car/spare-parts/add_category.html',{'cat':cat})
+    else:
+        return redirect('adminlogin')
+
+def del_category(request, id):
+    if 'admin' in request.session:
+        cat = parts_category.objects.get(id=id)
+        cat.delete()
+        return redirect('show_category')
+    else:
+        return redirect('adminlogin')
+
 def show_sub_category(request):
     if 'admin' in request.session:
         admin = superuser.objects.get(fname = request.session['admin'])
@@ -1554,6 +1579,38 @@ def add_sub_category(request):
             return render(request,"car/spare-parts/add_sub_category.html",{'admin':admin,'cat':cat})
         else:
             return redirect('adminlogin')
+
+def update_sub_category(request, id):
+    if 'admin' in request.session:
+        if request.method == 'POST':
+            name = request.POST.get('name')
+            myfile = request.FILES['image']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
+            description = request.POST.get('description')
+            price = request.POST.get('price')
+            fitparts = request.POST.get('fitmodel')
+            category = request.POST.get('partscategory')
+            obj = parts_category.objects.get(name=category)
+            parts_subcategory.objects.filter(id=id).update(name = name,image=myfile,description=description,price=price,fit_model=fitparts,Parts_Category_id = obj.id)
+            return redirect('show_sub_category')
+        else:
+            admin = superuser.objects.get(fname = request.session['admin'])
+            subcat = parts_subcategory.objects.get(id=id)
+            cat = parts_category.objects.all()
+            return render(request,"car/spare-parts/add_sub_category.html",{'admin':admin,'subcat':subcat,'cat':cat})   
+    else:
+        return redirect('adminlogin')
+
+def delete_subcategory(request, id):
+    if 'admin' in request.session:
+        subcat = parts_subcategory.objects.get(id=id)
+        subcat.delete()
+        return redirect('show_sub_category')
+    else:
+        return redirect('adminlogin')
+
 
 def sub_category_view(request,id):
     subcat = parts_subcategory.objects.all().filter(Parts_Category_id=id)

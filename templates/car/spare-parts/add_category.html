@@ -72,7 +72,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                                             </div>
-                                            <input name="name" id="name" class="form-control" placeholder="Category name" type="text">
+                                            <input name="name" id="name" class="form-control" value="{{cat.name}}" placeholder="Category name" type="text">
                                         </div>
                                         <!-- form-group// -->
                                         <!-- form-group// -->
@@ -85,7 +85,7 @@
                                         <input name="image" id="image" class="form-control" type="file">
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" id="btnSubmit" class="btn btn-primary btn-block"> Add
+                                        <button type="submit" id="btnSubmit" value="{{cat.image.url}}" class="btn btn-primary btn-block"> Add
                                             Category
                                         </button>
                                     </div>
